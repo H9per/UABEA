@@ -74,7 +74,6 @@ UABEAvalonia import -d ./GameData/ -i ./import/ --recursive
 ### Import Matching Rules
 The tool automatically searches the input directory (`-i`) for files ending in `-{AssetsFileName}-{PathID}.{ext}`.
 - The prefix (Asset Name) does not need to match perfectly; only the suffix is strictly checked.
-- Supports importing `.otf`/`.ttf` font files directly to replace Font data.
 - When importing `.png`/`.tga` images into Texture2D, **original texture formats are preserved by default** (e.g., ETC2, ASTC, DXT) using `TexturePlugin.dll`. If the plugin is unavailable, it falls back to RGBA32. You can force a specific format using `--tex-format <format>`.
 
 ---
