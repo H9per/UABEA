@@ -48,9 +48,31 @@ namespace UABEAvalonia
             }
             else
             {
-                if (usesConsole)
+                bool isHeadless = Environment.GetEnvironmentVariable("DISPLAY") == null && Environment.GetEnvironmentVariable("WAYLAND_DISPLAY") == null;
+                if (usesConsole && isHeadless)
+                {
                     CommandLineHandler.PrintHelp();
-                BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+                    return;
+                }
+                
+                try
+                {
+                    BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+                }
+                catch (Exception ex)
+                {
+                    if (usesConsole)
+                    {
+                        Console.WriteLine("Failed to launch GUI (X11/Wayland display not found or invalid).");
+                        Console.WriteLine("If you intended to use the CLI, please provide arguments.");
+                         Console.WriteLine();
+                        CommandLineHandler.PrintHelp();
+                    }
+                    else
+                    {
+                        throw; 
+                    }
+                }
             }
         }
 
